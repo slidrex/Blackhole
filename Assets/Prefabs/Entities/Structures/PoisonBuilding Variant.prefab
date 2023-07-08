@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &576574018540204938
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2266895085520319720, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_Name
+      value: PoisonBuilding Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.02721147
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319721, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319727, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_Color.b
+      value: 0.044239238
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319727, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_Color.g
+      value: 0.4433962
+      objectReference: {fileID: 0}
+    - target: {fileID: 2266895085520319727, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+      propertyPath: m_Color.r
+      value: 0.027607713
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1337160203, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+    - {fileID: 1337160204, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+--- !u!1 &1690475015797639010 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2266895085520319720, guid: b90d643f3c88e2f47b9b02c055e6707f, type: 3}
+  m_PrefabInstance: {fileID: 576574018540204938}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &847120295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690475015797639010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 369d69f25b5fc0f4baf37d3147c6a4ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinPushCooldown: 12
+  MaxPushCooldown: 16
+  _effectRadius: 1.7
+  activateParticle: {fileID: 4553467872643035208, guid: cf0654d95a4b40f4fbbebea053ad407a, type: 3}
+  poisonTime: 8
+  slownessPercentage: 0.95
+  poisonDamage: 1
+--- !u!114 &847120296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690475015797639010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9347b198d8f5b5446a168e3269b5bca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

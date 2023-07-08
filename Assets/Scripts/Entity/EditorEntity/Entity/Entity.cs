@@ -6,7 +6,7 @@ public abstract class Entity : MonoBehaviour, IPlaceable
 {
     public abstract byte SpaceRequired { get; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         LevelController.Instance.Runner.OnLevelRun += OnLevelRun;
     }

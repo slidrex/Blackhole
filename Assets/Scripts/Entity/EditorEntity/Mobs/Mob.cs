@@ -10,13 +10,18 @@ public abstract class Mob : Entity, IStatProvider
     public abstract float AttackDistance { get; }
 
     public abstract float AttackInterval { get; }
-    public abstract float MovementSpeed { get; }
+    public abstract float MovementSpeed { get; set;  }
     public ushort BaseDamage { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
     public abstract ushort CurrentHealth { get; set; }
-
+    public float SpeedMultiplier;
     private float timeToAttack;
-
+    public Color BaseColor;
+    protected override void Awake()
+    {
+        base.Awake();
+        BaseColor = GetComponent<SpriteRenderer>().color;
+    }
     public void Damage(ushort damage)
     {
         print(CurrentHealth);
@@ -43,7 +48,7 @@ public abstract class Mob : Entity, IStatProvider
         float distSqr = Vector2.SqrMagnitude((Vector2)transform.position - playerPos);
         if(distSqr > AttackDistance * AttackDistance)
         {
-            transform.position = Vector2.MoveTowards(transform.position, playerPos, MovementSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, playerPos, MovementSpeed * Time.deltaTime * (1 + SpeedMultiplier));
         }
         else if(CanAttack())
         {

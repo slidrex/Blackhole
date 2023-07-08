@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8806283462194595577}
   - component: {fileID: 8806283462194595583}
   - component: {fileID: 8806283462194595582}
+  - component: {fileID: 1861562893}
   m_Layer: 0
   m_Name: HealingFountain
   m_TagString: Untagged
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 62ce01ddca719d34ea9648c586a7cc94, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 0.7255039, g: 1, b: 0.61886793, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,4 +98,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633f0b69ae883334cb2417555dbc3295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 0}
+--- !u!114 &1861562893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8806283462194595576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd0279de55510d41b72883af8380b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinPushCooldown: 2
+  MaxPushCooldown: 8
+  _effectRadius: 1.5
+  activateParticle: {fileID: 8561753434578748646, guid: 8a98996f317b35745977db1854b20418, type: 3}
+  healthPercentageHealCall: 0.6
+  _heal: 10

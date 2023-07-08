@@ -43,6 +43,7 @@ public class PlayerNavigator
     }
     private void OnPlayerCall(Vector2 callPosition)
     {
+        if (activeCallings.Contains(callPosition)) return;
         activeCallings.Enqueue(callPosition);
         if (MoveState != MoveType.TARGET_AREA) MoveToNextCall();
     }
