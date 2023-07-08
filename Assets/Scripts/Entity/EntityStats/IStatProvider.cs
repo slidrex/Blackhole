@@ -4,8 +4,10 @@ using UnityEngine;
 
 public interface IStatProvider
 {
-    ushort Health { get; }
+    ushort MaxHealth { get; }
+    ushort CurrentHealth { get; }
     float AttackDistance { get; }
-    float AttackSpeed { get; }
+    float AttackInterval { get; }
     float MovementSpeed { get; }
+    void Damage(ushort damage);
 }

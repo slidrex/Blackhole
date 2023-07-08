@@ -19,10 +19,12 @@ public class PlayerNavigator
     private Queue<Vector2> activeCallings;
     private Vector2 _callPosition;
     private Transform _target;
+    private PlayerFightController _playerFightController;
     public PlayerNavigator(Player player)
     {
         this.player = player;
         activeCallings = new Queue<Vector2>();
+        _playerFightController = new(player);
     }
     public void Configure()
     {
@@ -37,6 +39,7 @@ public class PlayerNavigator
     {
         if (MoveState == MoveType.TARGET_AREA) PlayerCallMoveUpdate();
         else if (MoveState == MoveType.CHASE) PlayerChaseMoveUpdate();
+        _playerFightController.Update();
     }
     private void OnPlayerCall(Vector2 callPosition)
     {
@@ -69,10 +72,15 @@ public class PlayerNavigator
     }
     private void PlayerChaseMoveUpdate()
     {
-        if (_target == null) MoveToNextCall();
-        if(Vector2.SqrMagnitude((Vector2)_target.transform.position - player.GetPosition()) >= player.AttackDistance * player.AttackDistance)
+        if (_target == null)
+        {
+            MoveToNextCall();
+            return;
+        }
+        if (Vector2.SqrMagnitude((Vector2)_target.transform.position - player.GetPosition()) >= player.AttackDistance * player.AttackDistance)
         {
             player.Move(_target.position);
         }
+        else _playerFightController.HandleFight(_target.GetComponent<Mob>());
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Entity : MonoBehaviour, IPlaceable
 {
     public abstract byte SpaceRequired { get; }
+
     private void Awake()
     {
         LevelController.Instance.Runner.OnLevelRun += OnLevelRun;
@@ -12,6 +13,14 @@ public abstract class Entity : MonoBehaviour, IPlaceable
     private void OnDestroy()
     {
         LevelController.Instance.Runner.OnLevelRun -= OnLevelRun;
+    }
+    private void Update()
+    {
+        if (LevelController.Instance.IsRunning) LevelRunningUpdate();
+    }
+    protected virtual void LevelRunningUpdate()
+    {
+
     }
     public virtual void OnLevelRun()
     {
