@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public abstract class Mob : Entity, IStatProvider
 {
@@ -10,20 +11,25 @@ public abstract class Mob : Entity, IStatProvider
     public abstract float AttackDistance { get; }
 
     public abstract float AttackInterval { get; }
+    public abstract ushort AttackDamage { get; set; }
     public abstract float MovementSpeed { get; set;  }
-    public ushort BaseDamage { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
     public abstract ushort CurrentHealth { get; set; }
     public float SpeedMultiplier;
     private float timeToAttack;
     public Color BaseColor;
+    protected Animator _animator;
+    private GameObject bloodParticles;
     protected override void Awake()
     {
         base.Awake();
+        bloodParticles = Resources.Load<GameObject>("Blood");
         BaseColor = GetComponent<SpriteRenderer>().color;
+        _animator = GetComponent<Animator>();
     }
     public void Damage(ushort damage)
     {
+        GameObject temp = Instantiate(bloodParticles, transform.position, Quaternion.identity);
+        Destroy(temp, 1);
         print(CurrentHealth);
         if(CurrentHealth < damage)
         {
@@ -46,6 +52,12 @@ public abstract class Mob : Entity, IStatProvider
     {
         Vector2 playerPos = Player.Instance.GetPosition();
         float distSqr = Vector2.SqrMagnitude((Vector2)transform.position - playerPos);
+        float distX = transform.position.x - playerPos.x;
+        _animator.SetInteger("moveX", (int)distX);
+        if (distX < 0)
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        else if (distX > 0)
+            transform.eulerAngles = new Vector3(0, 180, 0);
         if(distSqr > AttackDistance * AttackDistance)
         {
             transform.position = Vector2.MoveTowards(transform.position, playerPos, MovementSpeed * Time.deltaTime * (1 + SpeedMultiplier));
@@ -69,5 +81,10 @@ public abstract class Mob : Entity, IStatProvider
             timeToAttack += Time.deltaTime;
         }
     }
-    protected abstract void OnAttack(Player player);
+    protected virtual void OnAttack(Player player)
+    {
+        GameObject temp = Instantiate(bloodParticles, player.GetPosition(), Quaternion.identity);
+        Destroy(temp, 1);
+        player.Damage(AttackDamage);
+    }
 }

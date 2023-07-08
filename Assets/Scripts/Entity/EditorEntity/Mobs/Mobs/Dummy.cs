@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Dummy : Mob
 {
     public override byte SpaceRequired => 2;
@@ -18,10 +14,5 @@ public class Dummy : Mob
 
     public override int ExpPerKill => 8;
 
-
-    private readonly ushort damage = 1;
-    protected override void OnAttack(Player player)
-    {
-        player.Damage(damage);
-    }
+    public override ushort AttackDamage { get; set; } = 1;
 }

@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerFightController
 {
@@ -18,9 +18,11 @@ public class PlayerFightController
     {
         HandleAttackCooldown();
     }
-    private void Attack(Mob mob)
+    private async void Attack(Mob mob)
     {
         timeSinceAttack = 0.0f;
+        player.GetAnimator().SetTrigger("Attack");
+        await Task.Delay(100);
         mob.Damage(player.damage);
     }
     private bool CanAttack() => timeSinceAttack >= player.AttackInterval;

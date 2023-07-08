@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +7,8 @@ public class Player : MonoBehaviour, IStatProvider
     public static Player Instance;
     [SerializeField] private Transform _transform;
     [SerializeField] private Healthbar _healthbar;
+    [SerializeField] private Animator anim;
+    private GameObject mobBlood;
     public PlayerLevelController PlayerLevelController;
     private PlayerNavigator _navigator;
     public Action OnPlayerDamaged;
@@ -28,11 +28,21 @@ public class Player : MonoBehaviour, IStatProvider
     private void Awake() => Instance = this;
     private void Start()
     {
+        mobBlood = Resources.Load<GameObject>("Blood");
         CurrentHealth = MaxHealth;
         _navigator = new PlayerNavigator(this);
         _navigator.Configure();
     }
-    public void Move(Vector2 targetPosition) => _transform.position = Vector2.MoveTowards(_transform.position, targetPosition, Time.deltaTime * MovementSpeed * (1 + SpeedAmplification));
+    public void Move(Vector2 targetPosition)
+    {
+        _transform.position = Vector2.MoveTowards(_transform.position, targetPosition, Time.deltaTime * MovementSpeed * (1 + SpeedAmplification));
+        float distX = GetPosition().x - targetPosition.x;
+        anim.SetInteger("moveX", (int)distX);
+        if (distX < 0)
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        else if (distX > 0)
+            transform.eulerAngles = new Vector3(0, 180, 0);
+    }
     public Vector2 GetPosition() => _transform.position;
     public bool IsPlayerInPosition(Vector2 position) => Mathf.Approximately(_transform.position.x, position.x) && Mathf.Approximately(_transform.position.y, position.y);
     private void Update()
@@ -65,4 +75,6 @@ public class Player : MonoBehaviour, IStatProvider
         CurrentHealth = (ushort)Mathf.Clamp(CurrentHealth + heal, 0, MaxHealth);
         _healthbar.UpdateHealthbar(CurrentHealth, MaxHealth);
     }
+    public Animator GetAnimator() => anim;
+    public GameObject GetBloodParticles() => mobBlood;
 }
