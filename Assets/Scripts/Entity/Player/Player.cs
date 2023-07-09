@@ -102,8 +102,7 @@ public class Player : MonoBehaviour, IStatProvider
     }
     public void Damage(ushort damage)
     {
-        damage = (ushort)(damage * (1 + DamageAmplification));
-        if (CurrentHealth < damage) Die();
+        if (CurrentHealth <= damage) Die();
         else CurrentHealth -= damage;
         _healthbar.UpdateHealthbar(CurrentHealth, MaxHealth);
         OnPlayerDamaged?.Invoke();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,10 +23,20 @@ public class LevelInteractController : MonoBehaviour
     [SerializeField] private Transform _startLevelPlayerPosition;
     [SerializeField] private Level[] levels;
     [SerializeField] private Camera _camera;
+    private float timeSinceCheck;
     private int currentLevel;
     private void Start()
     {
         StartGame();
+    }
+    public void CheckSceneState()
+    {
+        if(FindObjectOfType<Mob>() == null) 
+        {
+            
+            Task.Delay(5000);
+            MoveNext();
+        }
     }
     public void MoveNext()
     {
@@ -78,6 +89,20 @@ public class LevelInteractController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             MoveNext();
+        }
+        if(LevelController.Instance.IsRunning)
+            UpdateLevelStatus();
+    }
+    private void UpdateLevelStatus()
+    {
+        if(timeSinceCheck < 10)
+        {
+            timeSinceCheck += Time.deltaTime;
+        }
+        else
+        {
+            CheckSceneState();
+            timeSinceCheck = 0.0f;
         }
     }
 }

@@ -31,7 +31,7 @@ public abstract class Mob : Entity, IStatProvider
         GameObject temp = Instantiate(bloodParticles, transform.position, Quaternion.identity);
         Destroy(temp, 1);
 
-        if(CurrentHealth < damage)
+        if(CurrentHealth <= damage)
         {
             OnDie();
         }

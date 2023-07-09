@@ -24,7 +24,7 @@ public class PlayerFightController
         player.GetAnimator().SetTrigger("Attack");
         await Task.Delay(100);
         if(mob != null)
-            mob.Damage(player.damage);
+            mob.Damage((ushort)(player.damage * (1 + player.DamageAmplification)));
     }
     private bool CanAttack() => timeSinceAttack >= player.AttackInterval;
     private void HandleAttackCooldown()

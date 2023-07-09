@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Zombue : Mob
 {
-    public override int ExpPerKill => 8;
+    public override int ExpPerKill => 10;
 
     public override ushort MaxHealth => 20;
 
@@ -14,7 +14,7 @@ public class Zombue : Mob
     public override float MovementSpeed { get; set; } = 1.5f;
     public override ushort CurrentHealth { get; set; }
 
-    public override byte SpaceRequired => 6;
+    public override byte SpaceRequired => 4;
     protected async override void OnAttack(Player player)
     {
         _animator.SetTrigger("Attack");
