@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpeedMultiplier: 0
   BaseColor: {r: 1, g: 1, b: 1, a: 1}
+  projectile: {fileID: 4325801033492107627, guid: 5fd3d61a5537c544a804090e647e3f4c, type: 3}
 --- !u!95 &82241171020362845
 Animator:
   serializedVersion: 4

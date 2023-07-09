@@ -92,8 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369d69f25b5fc0f4baf37d3147c6a4ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinPushCooldown: 12
-  MaxPushCooldown: 16
+  MinPushCooldown: 7
+  MaxPushCooldown: 10
   _effectRadius: 1.7
   activateParticle: {fileID: 4553467872643035208, guid: cf0654d95a4b40f4fbbebea053ad407a, type: 3}
   poisonTime: 8

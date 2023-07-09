@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a6d00ae772638b748938ed08f6124513, type: 3}
-  m_Color: {r: 0.7255039, g: 1, b: 0.61886793, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -111,12 +111,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd0279de55510d41b72883af8380b35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinPushCooldown: 2
-  MaxPushCooldown: 8
+  MinPushCooldown: 6
+  MaxPushCooldown: 10
   _effectRadius: 1.5
   activateParticle: {fileID: 8561753434578748646, guid: 8a98996f317b35745977db1854b20418, type: 3}
   healthPercentageHealCall: 0.6
-  _heal: 10
+  _heal: 4
 --- !u!61 &3551657741029206379
 BoxCollider2D:
   m_ObjectHideFlags: 0
