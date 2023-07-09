@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class CreateTool : BuildingTool
 {
@@ -13,7 +15,7 @@ public class CreateTool : BuildingTool
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-        if (hit.collider == null)
+        if (hit.collider != null && hit.collider.gameObject.layer == 6)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
             if (_editor.SpaceController.TryAllocateSpace(_editor.CurrentHolder._entity))

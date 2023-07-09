@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PoisonAuraStructure : AreaEffectObject
@@ -35,12 +36,15 @@ public class PoisonAuraStructure : AreaEffectObject
             timeSinceSlowness += Time.deltaTime;
             if (timeSinceHit >= poisonTime/2)
             {
-                mob.Damage(poisonDamage);
+                if(mob != null) mob.Damage(poisonDamage);
                 timeSinceHit = 0;
             }
             else timeSinceHit += Time.deltaTime;
         }
-        mob.GetComponent<SpriteRenderer>().color = mob.BaseColor;
-        mob.SpeedMultiplier = 1;
+        if(mob != null)
+        {
+            mob.GetComponent<SpriteRenderer>().color = mob.BaseColor;
+            mob.SpeedMultiplier = 1;
+        }
     }
 }
