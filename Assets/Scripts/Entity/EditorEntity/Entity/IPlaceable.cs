@@ -6,5 +6,4 @@ public interface IPlaceable
 {
     byte SpaceRequired { get; }
     void OnConstruct();
-    void OnDestruct();
 }

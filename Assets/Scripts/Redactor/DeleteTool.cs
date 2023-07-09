@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class DeleteTool : BuildingTool
 {
@@ -15,7 +16,8 @@ public class DeleteTool : BuildingTool
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
         if (hit.collider != null)
         {
-            Destroy(hit.collider.gameObject);
+            DestroyImmediate(hit.collider.gameObject);
+            _editor.SpaceController.UpdateLevelAllocateStatus();
         }
     }
 }

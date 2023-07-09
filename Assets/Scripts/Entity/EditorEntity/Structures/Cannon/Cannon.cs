@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Cannon : Entity
 {
-    public override byte SpaceRequired => 8;
+    public override byte SpaceRequired => 5;
     [SerializeField] private float stalkingDistance;
     private enum BuildingState
     {

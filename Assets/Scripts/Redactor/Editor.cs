@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Editor : MonoBehaviour
 {
@@ -7,9 +8,12 @@ public class Editor : MonoBehaviour
     [field: SerializeField] public List<EntityHolder> Holders { get; private set; } = new();
     [field: SerializeField] public Transform Parent { get; private set; }
     public EntityHolder CurrentHolder { get; private set; }
+    [field: SerializeField] public EditorSpaceController SpaceController { get; private set; }
+    [SerializeField] private Button _runButton;
 
     private void Start()
     {
+        _runButton.onClick.AddListener(() => LevelController.Instance.Runner.RunLevel());
         Transform content = GameObject.Find("HolderContent").transform;
         Holders.AddRange(content.GetComponentsInChildren<EntityHolder>());
         for (int i = 0; i < Tools.Count; i++)
@@ -25,4 +29,11 @@ public class Editor : MonoBehaviour
         }
         CurrentHolder = holder;
     }
+    public void SwitchEditorMode(LevelInteractController.Level currentLevel, bool trueIfSwitch)
+    {
+        gameObject.SetActive(trueIfSwitch);
+        SpaceController.SetLevel(currentLevel);
+        SpaceController.UpdateLevelAllocateStatus();
+    }
+    public void ActiveRunButton(bool active) => _runButton.gameObject.SetActive(active);
 }

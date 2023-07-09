@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class SpeedFountainEntity : Entity
 {
-    public override byte SpaceRequired => 3;
+    public override byte SpaceRequired => 4;
 }

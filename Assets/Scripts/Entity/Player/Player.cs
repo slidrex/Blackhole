@@ -47,16 +47,13 @@ public class Player : MonoBehaviour, IStatProvider
     public bool IsPlayerInPosition(Vector2 position) => Mathf.Approximately(_transform.position.x, position.x) && Mathf.Approximately(_transform.position.y, position.y);
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) 
-        {
-            LevelController.Instance.Runner.RunLevel();
-        }
         _navigator.Update();
     }
     private void Die()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    public void SetPosition(Vector2 position) => _transform.position = position;
     public void OnLevelUp()
     {
         AttackInterval -= 0.05f;

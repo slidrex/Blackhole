@@ -16,7 +16,12 @@ public class CreateTool : BuildingTool
         if (hit.collider == null)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-            Instantiate(_editor?.CurrentHolder?._entity.gameObject, new Vector2(Mathf.Round(mousePos.x), Mathf.Round(mousePos.y)), Quaternion.identity, _editor.Parent.transform);
+            if (_editor.SpaceController.TryAllocateSpace(_editor.CurrentHolder._entity))
+            {
+                var entity = Instantiate(_editor.CurrentHolder._entity, new Vector2(Mathf.Round(mousePos.x), Mathf.Round(mousePos.y)), Quaternion.identity, _editor.Parent.transform);
+                entity.OnConstruct();
+                _editor.SpaceController.UpdateLevelAllocateStatus();
+            }
         }
     }
 }

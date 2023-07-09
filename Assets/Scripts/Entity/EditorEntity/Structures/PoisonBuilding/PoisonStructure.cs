@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class PoisonStructure : Entity
 {
-    public override byte SpaceRequired => 2;
+    public override byte SpaceRequired => 5;
 }

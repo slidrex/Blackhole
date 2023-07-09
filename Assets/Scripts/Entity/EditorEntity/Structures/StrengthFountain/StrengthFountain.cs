@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class StrengthFountain : Entity
 {
-    public override byte SpaceRequired => 5;
+    public override byte SpaceRequired => 3;
 }

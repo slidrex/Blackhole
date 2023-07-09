@@ -13,6 +13,7 @@ public abstract class Entity : MonoBehaviour, IPlaceable
     private void OnDestroy()
     {
         LevelController.Instance.Runner.OnLevelRun -= OnLevelRun;
+        LevelController.Instance.LevelInfo.UpdateMapInfo();
     }
     private void Update()
     {
@@ -28,11 +29,6 @@ public abstract class Entity : MonoBehaviour, IPlaceable
     }
 
     public virtual void OnConstruct()
-    {
-
-    }
-
-    public virtual void OnDestruct()
     {
 
     }
