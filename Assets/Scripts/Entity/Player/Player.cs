@@ -85,7 +85,7 @@ public class Player : MonoBehaviour, IStatProvider
     private void OnLevelRun(bool running)
     {
         ResetPlayer();
-        print("On leve run");
+
         if (!running)
         {
             damage = statsBeforeRun.damage;
@@ -94,7 +94,7 @@ public class Player : MonoBehaviour, IStatProvider
         }
         else statsBeforeRun = new PlayerLevelStats(PlayerLevelController.CurrentLevel, PlayerLevelController.currentExp, damage, AttackInterval);
     }
-    private void ResetPlayer()
+    private async void ResetPlayer()
     {
         SpeedAmplification = 0;
         DamageAmplification = 0;
@@ -103,6 +103,7 @@ public class Player : MonoBehaviour, IStatProvider
 
         _healthbar.UpdateHealthbar(CurrentHealth, MaxHealth);
 
+        await Task.Delay(500);
         anim.SetInteger("moveX", 0);
     }
     public void Move(Vector2 targetPosition)
