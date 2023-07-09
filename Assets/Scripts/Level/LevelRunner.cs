@@ -7,6 +7,7 @@ public class LevelRunner : MonoBehaviour
 {
     public Action<bool> OnLevelRun;
     public Action OnGameStart;
+    public Action OnMoveNext;
     public void RunLevel()
     {
         OnLevelRun.Invoke(true);
@@ -14,5 +15,6 @@ public class LevelRunner : MonoBehaviour
     public void StopLevel()
     {
         OnLevelRun?.Invoke(false);
+        LevelController.Instance.InteractController.CheckSceneState();
     }
 }

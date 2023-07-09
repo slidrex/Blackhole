@@ -18,7 +18,7 @@ public class Editor : MonoBehaviour
     {
         LevelController.Instance.Runner.OnLevelRun +=OnLevelRun;
         _resetButton.onClick.AddListener(() => LevelController.Instance.InteractController.StartGame());
-        _runButton.onClick.AddListener(() => LevelController.Instance.Runner.RunLevel());
+        _runButton.onClick.AddListener(OnRunButtonPressed);
         _stopButton.onClick.AddListener(() => LevelController.Instance.Runner.StopLevel());
         
         Transform content = GameObject.Find("HolderContent").transform;
@@ -28,9 +28,17 @@ public class Editor : MonoBehaviour
         for (int i = 0;i < Holders.Count; i++)
             Holders[i].SetEditor(this);
     }
+    private void OnRunButtonPressed()
+    {
+        
+        if (LevelController.Instance.IsRunning || LevelController.Instance.InteractController.Mode == LevelInteractController.PlayMode.Game) LevelController.Instance.InteractController.MoveNext();
+        else LevelController.Instance.Runner.RunLevel();
+    }
+
     private void OnDestroy()
     {
         LevelController.Instance.Runner.OnLevelRun -= OnLevelRun;
+        _runButton.onClick.RemoveAllListeners();
         _resetButton.onClick.RemoveAllListeners();
     }
     public void SetCurrentHolder(EntityHolder holder)
@@ -45,7 +53,11 @@ public class Editor : MonoBehaviour
     {
         _stopButton.gameObject.SetActive(isRunning);
         SwitchEditorMode(SpaceController.CurrentLevel, !isRunning);
-        if (!isRunning)
+        if (isRunning)
+        {
+            ActiveRunButton(false);
+        }
+        else
         {
             LevelController.Instance.InteractController.SetupCurrentLevel();
             SpaceController.UpdateLevelAllocateStatus();
@@ -62,5 +74,9 @@ public class Editor : MonoBehaviour
             SpaceController.UpdateLevelAllocateStatus();
         }
     }
-    public void ActiveRunButton(bool active) => _runButton.gameObject.SetActive(active);
+    public void ActiveRunButton(bool active)
+    {
+        _runButton.gameObject.SetActive(active);
+        _stopButton.gameObject.SetActive(!active);
+    }
 }

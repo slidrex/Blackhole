@@ -12,18 +12,19 @@ public class LevelInteractController : MonoBehaviour
     {
         public Transform PlayerPosition;
         public Transform CameraPosition;
+        public int CameraSize;
         public byte AvailableSpace;
     }
     public enum PlayMode
     {
         Game, Editor
     }
+    public PlayMode Mode;
     [SerializeField] private Editor editor;
     [SerializeField] private Transform _startLevelCameraPosition;
     [SerializeField] private Transform _startLevelPlayerPosition;
     [SerializeField] private Level[] levels;
     [SerializeField] private Camera _camera;
-    private float timeSinceCheck;
     private int currentLevel;
     private void Start()
     {
@@ -31,17 +32,20 @@ public class LevelInteractController : MonoBehaviour
     }
     public void CheckSceneState()
     {
-        if(FindObjectOfType<Mob>() == null) 
+        var mobs = FindObjectsOfType<Mob>();
+        if (mobs == null) editor.ActiveRunButton(true);
+        foreach(var mob in mobs)
         {
-            
-            Task.Delay(5000);
-            MoveNext();
+            if (mob.IsDead == false) return;
         }
+        editor.ActiveRunButton(true);
     }
     public void MoveNext()
     {
         currentLevel++;
-        SetupCurrentLevel();
+        LevelController.Instance.Runner.OnMoveNext.Invoke();
+        StopLevel();
+        editor.ActiveRunButton(false);
     }
     public void StartGame()
     {
@@ -53,8 +57,8 @@ public class LevelInteractController : MonoBehaviour
     }
     public void StopLevel()
     {
-        LevelController.Instance.Runner.StopLevel();
         SetupCurrentLevel();
+        LevelController.Instance.Runner.StopLevel();
     }
     public void SetupCurrentLevel()
     {
@@ -66,6 +70,11 @@ public class LevelInteractController : MonoBehaviour
     {
         int curLevelIndex = currentLevel - 1;
         Vector2 cameraPos, playerPos;
+        if(levels.Length <= curLevelIndex - 1)
+        {
+            OnGameEnd();
+            return;
+        }
         if(curLevelIndex < 0)
         {
             cameraPos = _startLevelCameraPosition.position;
@@ -73,6 +82,7 @@ public class LevelInteractController : MonoBehaviour
         }
         else
         {
+            Camera.main.orthographicSize = levels[curLevelIndex].CameraSize;
             cameraPos = levels[curLevelIndex].CameraPosition.position;
             playerPos = levels[curLevelIndex].PlayerPosition.position;
         }
@@ -81,28 +91,12 @@ public class LevelInteractController : MonoBehaviour
     }
     public void SetPlaymode(PlayMode playmode)
     {
+        Mode = playmode;
         var level = currentLevel >= 1 ? levels[currentLevel - 1] : null;
         editor.SwitchEditorMode(level, playmode == PlayMode.Editor);
     }
-    private void Update()
+    public void OnGameEnd()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            MoveNext();
-        }
-        if(LevelController.Instance.IsRunning)
-            UpdateLevelStatus();
-    }
-    private void UpdateLevelStatus()
-    {
-        if(timeSinceCheck < 10)
-        {
-            timeSinceCheck += Time.deltaTime;
-        }
-        else
-        {
-            CheckSceneState();
-            timeSinceCheck = 0.0f;
-        }
+
     }
 }

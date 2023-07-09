@@ -30,8 +30,25 @@ public class Player : MonoBehaviour, IStatProvider
     private void Awake() => Instance = this;
     private float baseAttackSpeed;
     private ushort baseDamage;
+    public class PlayerLevelStats
+    {
+        public int level;
+        public int exp;
+        public ushort damage;
+        public float attackInterval;
+        public PlayerLevelStats(int level, int exp, ushort damage, float attackInterval)
+        {
+            this.level = level;
+            this.exp = exp;
+            this.damage = damage;
+            this.attackInterval = attackInterval;
+        }
+    }
+    private PlayerLevelStats statsBeforeRun;
+
     private void Start()
     {
+        OnMoveNext();
         baseDamage = damage;
         baseAttackSpeed = AttackInterval;
         mobBlood = Resources.Load<GameObject>("Blood");
@@ -43,11 +60,17 @@ public class Player : MonoBehaviour, IStatProvider
     {
         LevelController.Instance.Runner.OnGameStart += OnGameStart;
         LevelController.Instance.Runner.OnLevelRun += OnLevelRun;
+        LevelController.Instance.Runner.OnMoveNext += OnMoveNext;
     }
     private void OnDisable()
     {
         LevelController.Instance.Runner.OnLevelRun -= OnLevelRun;
         LevelController.Instance.Runner.OnGameStart -= OnGameStart;
+        LevelController.Instance.Runner.OnMoveNext -= OnMoveNext;
+    }
+    private void OnMoveNext()
+    {
+        statsBeforeRun = new PlayerLevelStats(PlayerLevelController.CurrentLevel, PlayerLevelController.currentExp, damage, AttackInterval);
     }
     private void OnGameStart()
     {
@@ -62,6 +85,14 @@ public class Player : MonoBehaviour, IStatProvider
     private void OnLevelRun(bool running)
     {
         ResetPlayer();
+        print("On leve run");
+        if (!running)
+        {
+            damage = statsBeforeRun.damage;
+            AttackInterval = statsBeforeRun.attackInterval;
+            PlayerLevelController.FeedStats(statsBeforeRun);
+        }
+        else statsBeforeRun = new PlayerLevelStats(PlayerLevelController.CurrentLevel, PlayerLevelController.currentExp, damage, AttackInterval);
     }
     private void ResetPlayer()
     {

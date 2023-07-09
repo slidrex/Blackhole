@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stalkingDistance: 4
-  bullet: {fileID: 0}
+  bullet: {fileID: 486872274346503116, guid: f79a735538b1c11438b3ffdb0b0f6627, type: 3}
   firePos: {fileID: 5931659311121944852}
   shotInterval: 2
   baseIdleChangeInterval: 4

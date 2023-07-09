@@ -7,6 +7,7 @@ public abstract class Mob : Entity, IStatProvider
 {
     public abstract int ExpPerKill { get; }
     public abstract ushort MaxHealth { get; }
+    public bool IsDead { get; private set; }
 
     public abstract float AttackDistance { get; }
 
@@ -44,10 +45,11 @@ public abstract class Mob : Entity, IStatProvider
     }
     private void OnDie()
     {
+        IsDead = true;
         Player.Instance.PlayerLevelController.AddExp(ExpPerKill);
+        LevelController.Instance.InteractController.CheckSceneState();
         Destroy(gameObject);
     }
-
     protected override void LevelRunningUpdate()
     {
         Vector2 playerPos = Player.Instance.GetPosition();

@@ -13,6 +13,7 @@ public class DeleteTool : BuildingTool
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+        
         if (hit.collider != null && hit.collider.gameObject.layer != 6)
         {
             DestroyImmediate(hit.collider.gameObject);
