@@ -85,8 +85,11 @@ public abstract class Mob : Entity, IStatProvider
     }
     protected virtual void OnAttack(Player player)
     {
-        GameObject temp = Instantiate(bloodParticles, player.GetPosition(), Quaternion.identity);
-        Destroy(temp, 1);
-        player.Damage(AttackDamage);
+        if(AttackDamage != 0)
+        {
+            GameObject temp = Instantiate(bloodParticles, player.GetPosition(), Quaternion.identity);
+            Destroy(temp, 1);
+            player.Damage(AttackDamage);
+        }
     }
 }
