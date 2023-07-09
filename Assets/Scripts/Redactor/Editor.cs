@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class Editor : MonoBehaviour
 {
@@ -53,16 +54,14 @@ public class Editor : MonoBehaviour
     {
         _stopButton.gameObject.SetActive(isRunning);
         SwitchEditorMode(SpaceController.CurrentLevel, !isRunning);
-        if (isRunning)
-        {
-            ActiveRunButton(false);
-        }
-        else
+        
+        if(!isRunning)
         {
             LevelController.Instance.InteractController.SetupCurrentLevel();
             SpaceController.UpdateLevelAllocateStatus();
             SpaceController.SetLevelSpaceView(0);
         }
+        ActiveRunButton(false);
     }
     public void SwitchEditorMode(LevelInteractController.Level currentLevel, bool trueIfSwitch)
     {
