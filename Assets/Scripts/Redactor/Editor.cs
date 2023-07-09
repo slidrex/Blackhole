@@ -11,12 +11,16 @@ public class Editor : MonoBehaviour
     [field: SerializeField] public Transform Parent { get; private set; }
     public EntityHolder CurrentHolder { get; private set; }
     [field: SerializeField] public EditorSpaceController SpaceController { get; private set; }
+    [SerializeField] private Button _resetButton;
     [SerializeField] private Button _runButton;
-
+    [SerializeField] private Button _stopButton;
     private void Start()
     {
         LevelController.Instance.Runner.OnLevelRun +=OnLevelRun;
+        _resetButton.onClick.AddListener(() => LevelController.Instance.InteractController.StartGame());
         _runButton.onClick.AddListener(() => LevelController.Instance.Runner.RunLevel());
+        _stopButton.onClick.AddListener(() => LevelController.Instance.Runner.StopLevel());
+        
         Transform content = GameObject.Find("HolderContent").transform;
         Holders.AddRange(content.GetComponentsInChildren<EntityHolder>());
         for (int i = 0; i < Tools.Count; i++)
@@ -27,6 +31,7 @@ public class Editor : MonoBehaviour
     private void OnDestroy()
     {
         LevelController.Instance.Runner.OnLevelRun -= OnLevelRun;
+        _resetButton.onClick.RemoveAllListeners();
     }
     public void SetCurrentHolder(EntityHolder holder)
     {
@@ -36,9 +41,16 @@ public class Editor : MonoBehaviour
         }
         CurrentHolder = holder;
     }
-    private void OnLevelRun()
+    private void OnLevelRun(bool isRunning)
     {
-        SwitchEditorMode(null, false);
+        _stopButton.gameObject.SetActive(isRunning);
+        SwitchEditorMode(SpaceController.CurrentLevel, !isRunning);
+        if (!isRunning)
+        {
+            LevelController.Instance.InteractController.SetupCurrentLevel();
+            SpaceController.UpdateLevelAllocateStatus();
+            SpaceController.SetLevelSpaceView(0);
+        }
     }
     public void SwitchEditorMode(LevelInteractController.Level currentLevel, bool trueIfSwitch)
     {

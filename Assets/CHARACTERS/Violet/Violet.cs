@@ -19,10 +19,11 @@ public class Violet : Mob
 
     public override ushort AttackDamage { get; set; } = 10;
 
-    public override void OnLevelRun()
+    public override void OnLevelRun(bool run)
     {
-        base.OnLevelRun();
-        _animator.SetTrigger("Start");
+        base.OnLevelRun(run);
+        if(run)
+            _animator.SetTrigger("Start");
     }
     protected override void LevelRunningUpdate()
     {

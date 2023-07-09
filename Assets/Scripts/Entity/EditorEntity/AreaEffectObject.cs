@@ -20,7 +20,7 @@ public class AreaEffectObject : MonoBehaviour
     {
         LevelController.Instance.Runner.OnLevelRun -= BeginTimer;
     }
-    protected void BeginTimer()
+    protected void BeginTimer(bool run)
     {
         _timeSincePush = Random.Range(MinPushCooldown, MaxPushCooldown);
         isRunning = true;

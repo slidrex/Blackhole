@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class LevelRunner : MonoBehaviour
 {
-    public Action OnLevelRun;
-    public Action OnLevelEnd;
+    public Action<bool> OnLevelRun;
+    public Action OnGameStart;
     public void RunLevel()
     {
-        OnLevelRun.Invoke();
+        OnLevelRun.Invoke(true);
     }
     public void StopLevel()
     {
-        OnLevelEnd.Invoke();
+        OnLevelRun?.Invoke(false);
     }
 }

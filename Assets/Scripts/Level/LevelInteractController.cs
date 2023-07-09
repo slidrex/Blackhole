@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelInteractController : MonoBehaviour
 {
@@ -22,19 +23,33 @@ public class LevelInteractController : MonoBehaviour
     [SerializeField] private Level[] levels;
     [SerializeField] private Camera _camera;
     private int currentLevel;
+    private void Start()
+    {
+        StartGame();
+    }
     public void MoveNext()
     {
         currentLevel++;
-        if(currentLevel != 1)
-            LevelController.Instance.LevelInfo.DestroyAllEntities();
-        SetupLevelEnities();
-        SetPlaymode(PlayMode.Editor);
+        SetupCurrentLevel();
     }
     public void StartGame()
     {
         currentLevel = 0;
-        SetPlaymode(PlayMode.Game);
+        LevelController.Instance.LevelInfo.DestroyAllEntities();
+        LevelController.Instance.Runner.OnGameStart?.Invoke();
         SetupLevelEnities();
+        SetPlaymode(PlayMode.Game);
+    }
+    public void StopLevel()
+    {
+        LevelController.Instance.Runner.StopLevel();
+        SetupCurrentLevel();
+    }
+    public void SetupCurrentLevel()
+    {
+        LevelController.Instance.LevelInfo.DestroyAllEntities();
+        SetupLevelEnities();
+        SetPlaymode(PlayMode.Editor);
     }
     private void SetupLevelEnities()
     {
@@ -63,10 +78,6 @@ public class LevelInteractController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             MoveNext();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartGame();
         }
     }
 }

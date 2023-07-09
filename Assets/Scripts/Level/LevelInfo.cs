@@ -8,10 +8,11 @@ public class LevelInfo
     public Entity[] Entities { get; private set; }
     public void DestroyAllEntities()
     {
-        foreach (var entity in Entities)
-        {
-            MonoBehaviour.Destroy(entity.gameObject);
-        }
+        if (Entities != null)
+            foreach (var entity in Entities)
+            {
+                MonoBehaviour.Destroy(entity.gameObject);
+            }
         UpdateMapInfo();
     }
     public void UpdateMapInfo()

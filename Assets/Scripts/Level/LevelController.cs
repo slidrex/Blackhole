@@ -20,9 +20,9 @@ public class LevelController : MonoBehaviour
     {
         Runner.OnLevelRun -= OnLevelStart;
     }
-    private void OnLevelStart()
+    private void OnLevelStart(bool isRunning)
     {
-        IsRunning = true;
+        IsRunning = isRunning;
         LevelInfo.UpdateMapInfo();
     }
 }

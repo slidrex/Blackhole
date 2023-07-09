@@ -33,4 +33,11 @@ public class PlayerLevelController : MonoBehaviour
     {
         return (int)(BaseExpPerLevel * Mathf.Pow(1.15f, (CurrentLevel + 1)));
     }
+    public void ResetLevel()
+    {
+        _expFill.fillAmount = 0;
+        CurrentLevel = 0;
+        currentExp = 0;
+        _levelText.text = CurrentLevel.ToString();
+    }
 }

@@ -23,7 +23,7 @@ public abstract class Entity : MonoBehaviour, IPlaceable
     {
 
     }
-    public virtual void OnLevelRun()
+    public virtual void OnLevelRun(bool isRunning)
     {
 
     }

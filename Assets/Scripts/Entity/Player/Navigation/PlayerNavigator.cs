@@ -29,11 +29,11 @@ public class PlayerNavigator
     public void Configure()
     {
         navigatorModel = new PlayerNavigatorModel(OnPlayerCall);
-        LevelController.Instance.Runner.OnLevelRun += MoveToNextCall;
+        LevelController.Instance.Runner.OnLevelRun += OnLevelRun;
     }
     ~PlayerNavigator()
     {
-        LevelController.Instance.Runner.OnLevelRun -= MoveToNextCall;
+        LevelController.Instance.Runner.OnLevelRun -= OnLevelRun;
     }
     public void Update()
     {
@@ -48,7 +48,10 @@ public class PlayerNavigator
         if (MoveState != MoveType.TARGET_AREA) MoveToNextCall();
     }
     
-    
+    private void OnLevelRun(bool isRunning)
+    {
+        if (isRunning) MoveToNextCall();
+    }
     private void MoveToNextCall()
     {
         if(activeCallings.Count > 0)

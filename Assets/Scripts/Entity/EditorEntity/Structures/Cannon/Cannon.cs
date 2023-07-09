@@ -23,7 +23,7 @@ public class Cannon : Entity
     private float idleChangeInterval;
     private float timeSinceIdleChanged;
     private Vector2 stalkingDirection;
-    public override void OnLevelRun()
+    public override void OnLevelRun(bool isRunning)
     {
         idleChangeInterval = baseIdleChangeInterval + Random.Range(-1, 3);
         timeSinceIdleChanged = 0.0f;

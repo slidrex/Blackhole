@@ -23,7 +23,8 @@ public class PlayerFightController
         timeSinceAttack = 0.0f;
         player.GetAnimator().SetTrigger("Attack");
         await Task.Delay(100);
-        mob.Damage(player.damage);
+        if(mob != null)
+            mob.Damage(player.damage);
     }
     private bool CanAttack() => timeSinceAttack >= player.AttackInterval;
     private void HandleAttackCooldown()

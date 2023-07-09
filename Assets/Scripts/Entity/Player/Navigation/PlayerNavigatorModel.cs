@@ -20,7 +20,7 @@ public class PlayerNavigatorModel
     {
         LevelController.Instance.Runner.OnLevelRun -= OnLevelRun;
     }
-    private void OnLevelRun()
+    private void OnLevelRun(bool isRunning)
     {
         var entities = LevelController.Instance.LevelInfo.Entities;
         Debug.Log("Find IPlayerAreaTarget...");

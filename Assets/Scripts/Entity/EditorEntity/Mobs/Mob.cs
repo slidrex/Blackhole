@@ -30,7 +30,7 @@ public abstract class Mob : Entity, IStatProvider
     {
         GameObject temp = Instantiate(bloodParticles, transform.position, Quaternion.identity);
         Destroy(temp, 1);
-        print(CurrentHealth);
+
         if(CurrentHealth < damage)
         {
             OnDie();
@@ -38,7 +38,7 @@ public abstract class Mob : Entity, IStatProvider
         else
             CurrentHealth -= damage;
     }
-    public override void OnLevelRun()
+    public override void OnLevelRun(bool run)
     {
         CurrentHealth = MaxHealth;
     }

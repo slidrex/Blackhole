@@ -4,7 +4,7 @@ public class Ghost : Mob
 {
     public override int ExpPerKill => 10;
 
-    public override ushort MaxHealth => 15;
+    public override ushort MaxHealth => 6;
 
     public override float AttackDistance => 1.5f;
 

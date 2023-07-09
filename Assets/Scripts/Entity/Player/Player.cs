@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,12 +28,51 @@ public class Player : MonoBehaviour, IStatProvider
     public float SpeedAmplification;
 
     private void Awake() => Instance = this;
+    private float baseAttackSpeed;
+    private ushort baseDamage;
     private void Start()
     {
+        baseDamage = damage;
+        baseAttackSpeed = AttackInterval;
         mobBlood = Resources.Load<GameObject>("Blood");
         CurrentHealth = MaxHealth;
         _navigator = new PlayerNavigator(this);
         _navigator.Configure();
+    }
+    private void OnEnable()
+    {
+        LevelController.Instance.Runner.OnGameStart += OnGameStart;
+        LevelController.Instance.Runner.OnLevelRun += OnLevelRun;
+    }
+    private void OnDisable()
+    {
+        LevelController.Instance.Runner.OnLevelRun -= OnLevelRun;
+        LevelController.Instance.Runner.OnGameStart -= OnGameStart;
+    }
+    private void OnGameStart()
+    {
+        ResetPlayer();
+        if (damage != 0 && baseAttackSpeed != 0)
+        {
+            damage = baseDamage;
+            AttackInterval = baseAttackSpeed;
+        }
+        PlayerLevelController.ResetLevel();
+    }
+    private void OnLevelRun(bool running)
+    {
+        ResetPlayer();
+    }
+    private void ResetPlayer()
+    {
+        SpeedAmplification = 0;
+        DamageAmplification = 0;
+        CurrentHealth = MaxHealth;
+        
+
+        _healthbar.UpdateHealthbar(CurrentHealth, MaxHealth);
+
+        anim.SetInteger("moveX", 0);
     }
     public void Move(Vector2 targetPosition)
     {

@@ -6,16 +6,16 @@ using UnityEngine;
 public class EditorSpaceController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _levelSpaceView;
-    private LevelInteractController.Level currentLevel;
+    public LevelInteractController.Level CurrentLevel { get; private set; }
     [SerializeField] private Editor editor;
     public void SetLevel(LevelInteractController.Level level)
     {
-        currentLevel = level;
+        CurrentLevel = level;
     }
     public bool TryAllocateSpace(Entity entity)
     {
         int newSpace = GetEntityAllocatedSpace() + entity.SpaceRequired;
-        if (newSpace <= currentLevel.AvailableSpace)
+        if (newSpace <= CurrentLevel.AvailableSpace)
         {
             return true;
         }
@@ -26,10 +26,15 @@ public class EditorSpaceController : MonoBehaviour
     {
         LevelController.Instance.LevelInfo.UpdateMapInfo();
         int available = 0;
-        if(currentLevel != null) available = currentLevel.AvailableSpace;
+        if(CurrentLevel != null) available = CurrentLevel.AvailableSpace;
         int allocated = GetEntityAllocatedSpace();
-        _levelSpaceView.text = $"{allocated}/{available}";
+        SetLevelSpaceView(allocated);
         editor.ActiveRunButton(available == allocated);
+    }
+    public void SetLevelSpaceView(int allocated)
+    {
+        _levelSpaceView.text = $"{allocated}/{CurrentLevel.AvailableSpace}";
+
     }
     private int GetEntityAllocatedSpace()
     {
