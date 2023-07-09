@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class Editor : MonoBehaviour
 {
+    [SerializeField] private GameObject playmodeScreen;
+    [SerializeField] private GameObject editorScreen;
     [field: SerializeField] public List<BuildingTool> Tools { get; private set; } = new();
     [field: SerializeField] public List<EntityHolder> Holders { get; private set; } = new();
     [field: SerializeField] public Transform Parent { get; private set; }
@@ -13,6 +15,7 @@ public class Editor : MonoBehaviour
 
     private void Start()
     {
+        LevelController.Instance.Runner.OnLevelRun +=OnLevelRun;
         _runButton.onClick.AddListener(() => LevelController.Instance.Runner.RunLevel());
         Transform content = GameObject.Find("HolderContent").transform;
         Holders.AddRange(content.GetComponentsInChildren<EntityHolder>());
@@ -20,6 +23,10 @@ public class Editor : MonoBehaviour
             Tools[i].SetEditor(this);
         for (int i = 0;i < Holders.Count; i++)
             Holders[i].SetEditor(this);
+    }
+    private void OnDestroy()
+    {
+        LevelController.Instance.Runner.OnLevelRun -= OnLevelRun;
     }
     public void SetCurrentHolder(EntityHolder holder)
     {
@@ -29,11 +36,19 @@ public class Editor : MonoBehaviour
         }
         CurrentHolder = holder;
     }
+    private void OnLevelRun()
+    {
+        SwitchEditorMode(null, false);
+    }
     public void SwitchEditorMode(LevelInteractController.Level currentLevel, bool trueIfSwitch)
     {
-        gameObject.SetActive(trueIfSwitch);
-        SpaceController.SetLevel(currentLevel);
-        SpaceController.UpdateLevelAllocateStatus();
+        editorScreen.SetActive(trueIfSwitch);
+        playmodeScreen.SetActive(!trueIfSwitch);
+        if (trueIfSwitch)
+        {
+            SpaceController.SetLevel(currentLevel);
+            SpaceController.UpdateLevelAllocateStatus();
+        }
     }
     public void ActiveRunButton(bool active) => _runButton.gameObject.SetActive(active);
 }
