@@ -25,6 +25,7 @@ public class SpeedFountain : AreaEffectObject, IPlayerAreaTarget
             if (obj.TryGetComponent<PlayerTransform>(out var player))
             {
                 Player.Instance.SpeedAmplification += speedAmplificationMultiplier;
+                SoundController.Instance.PlayFountain();
                 StartCoroutine(UnamplifySpeed());
                 return true;
             }

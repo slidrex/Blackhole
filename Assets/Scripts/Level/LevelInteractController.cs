@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelInteractController : MonoBehaviour
@@ -25,10 +27,26 @@ public class LevelInteractController : MonoBehaviour
     [SerializeField] private Transform _startLevelPlayerPosition;
     [SerializeField] private Level[] levels;
     [SerializeField] private Camera _camera;
+    [SerializeField] private Entity violet;
+    [SerializeField] private Transform violetPosition;
     private int currentLevel;
+    public bool IsLastLevel;
     private void Start()
     {
         StartGame();
+        LevelController.Instance.Runner.OnLevelRun += OnLevelRun;
+    }
+    private void OnDestroy()
+    {
+        LevelController.Instance.Runner.OnLevelRun -= OnLevelRun;
+    }
+    private void OnLevelRun(bool run)
+    {
+        if (IsLastLevel)
+        {
+            if (!run)
+                OnLastLevelLoaded();
+        }
     }
     public void CheckSceneState()
     {
@@ -44,16 +62,25 @@ public class LevelInteractController : MonoBehaviour
     {
         currentLevel++;
         LevelController.Instance.Runner.OnMoveNext.Invoke();
+        
         StopLevel();
         editor.ActiveRunButton(false);
+        if (currentLevel >= levels.Length) OnLastLevelLoaded();
+    }
+    public void OnLastLevelLoaded()
+    {
+        IsLastLevel = true;
+        Instantiate(violet, violetPosition.transform.position, Quaternion.identity);
     }
     public void StartGame()
     {
+        IsLastLevel = false;
         currentLevel = 0;
         LevelController.Instance.LevelInfo.DestroyAllEntities();
         LevelController.Instance.Runner.OnGameStart?.Invoke();
         SetupLevelEnities();
         SetPlaymode(PlayMode.Game);
+        editor.ActiveRunButton(true);
     }
     public void StopLevel()
     {
@@ -70,7 +97,7 @@ public class LevelInteractController : MonoBehaviour
     {
         int curLevelIndex = currentLevel - 1;
         Vector2 cameraPos, playerPos;
-        if(levels.Length <= curLevelIndex - 1)
+        if(levels.Length <= curLevelIndex)
         {
             OnGameEnd();
             return;
@@ -92,11 +119,14 @@ public class LevelInteractController : MonoBehaviour
     public void SetPlaymode(PlayMode playmode)
     {
         Mode = playmode;
-        var level = currentLevel >= 1 ? levels[currentLevel - 1] : null;
+        Level level;
+        if (levels.Length <= currentLevel - 1) level = null;
+        else
+        level = currentLevel >= 1 ? levels[currentLevel - 1] : null;
         editor.SwitchEditorMode(level, playmode == PlayMode.Editor);
     }
     public void OnGameEnd()
     {
-
+        SceneManager.LoadScene(2);
     }
 }

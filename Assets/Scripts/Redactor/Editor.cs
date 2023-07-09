@@ -54,14 +54,16 @@ public class Editor : MonoBehaviour
     {
         _stopButton.gameObject.SetActive(isRunning);
         SwitchEditorMode(SpaceController.CurrentLevel, !isRunning);
-        
-        if(!isRunning)
+
+
+        if (!isRunning)
         {
             LevelController.Instance.InteractController.SetupCurrentLevel();
             SpaceController.UpdateLevelAllocateStatus();
             SpaceController.SetLevelSpaceView(0);
         }
-        ActiveRunButton(false);
+        else
+            ActiveRunButton(false);
     }
     public void SwitchEditorMode(LevelInteractController.Level currentLevel, bool trueIfSwitch)
     {

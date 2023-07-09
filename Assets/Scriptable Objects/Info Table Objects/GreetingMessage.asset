@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d692cfaf0292dad4f8fc356df738e8c7, type: 3}
+  m_Name: GreetingMessage
+  m_EditorClassIdentifier: 
+  TableQueue:
+  - Hello!
+  - Are you ok?
+  - I hope you are fine...
+  - So...
+  - ...
+  - Do you see this knight?
+  - This little thing is a player that plays your game
+  - Who knows what this knight can do...
+  - Your main purpose is to make his life better
+  - Because you are a game designer
+  - Build structures, place mobs and upgrade him
+  - Programmers and artists already did their work
+  - The rest is up to you
+  - Don't leave this knight alone
+  - Good luck!

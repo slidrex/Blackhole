@@ -17,6 +17,7 @@ public class DeleteTool : BuildingTool
         if (hit.collider != null && hit.collider.gameObject.layer != 6)
         {
             DestroyImmediate(hit.collider.gameObject);
+            SoundController.Instance.PlayDeconstructEntity();
             _editor.SpaceController.UpdateLevelAllocateStatus();
         }
     }

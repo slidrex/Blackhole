@@ -5,7 +5,7 @@ public class Violet : Mob
 {
     public override int ExpPerKill => 10000;
 
-    public override ushort MaxHealth => 100;
+    public override ushort MaxHealth => 120;
 
     public override float AttackDistance => 2.5f;
 
@@ -18,16 +18,35 @@ public class Violet : Mob
     public override byte SpaceRequired => 0;
 
     public override ushort AttackDamage { get; set; } = 10;
-
+    private Bossbar bossbar;
+    protected override void Awake()
+    {
+        base.Awake();
+        bossbar = FindObjectOfType<Bossbar>();
+    }
     public override void OnLevelRun(bool run)
     {
         base.OnLevelRun(run);
-        if(run)
+        if (run) 
+        {
             _animator.SetTrigger("Start");
+        }
+        bossbar.ActivateBar(run);
+            
+    }
+    protected override void OnDie()
+    {
+        bossbar.ActivateBar(false);
+        base.OnDie();
     }
     protected override void LevelRunningUpdate()
     {
         base.LevelRunningUpdate();
+    }
+    public override void Damage(ushort damage)
+    {
+        base.Damage(damage);
+        bossbar.FillBar(CurrentHealth, MaxHealth);
     }
     protected override void OnAttack(Player player)
     {

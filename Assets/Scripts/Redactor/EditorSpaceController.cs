@@ -33,6 +33,7 @@ public class EditorSpaceController : MonoBehaviour
     }
     public void SetLevelSpaceView(int allocated)
     {
+        if (CurrentLevel == null) return;
         _levelSpaceView.text = $"{allocated}/{CurrentLevel.AvailableSpace}";
 
     }

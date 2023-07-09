@@ -124,7 +124,7 @@ public class Player : MonoBehaviour, IStatProvider
     }
     private void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LevelController.Instance.Runner.StopLevel();
     }
     public void SetPosition(Vector2 position) => _transform.position = position;
     public void OnLevelUp()

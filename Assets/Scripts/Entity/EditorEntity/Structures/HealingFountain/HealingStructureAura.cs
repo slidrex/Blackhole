@@ -31,6 +31,7 @@ public class HealingStructureAura : AreaEffectObject, IPlayerAreaTarget
             {
                 Player.Instance.Heal(_heal);
                 preventCalling = false;
+                SoundController.Instance.PlayFountain();
                 return true;
             }
         }

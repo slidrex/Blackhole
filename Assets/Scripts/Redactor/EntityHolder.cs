@@ -20,6 +20,7 @@ public class EntityHolder : MonoBehaviour
     public void OnSelect()
     {
         _editor.SetCurrentHolder(this);
+        SoundController.Instance.PlaySelectEntity();
         _backLight.SetActive(true);
     }
 }

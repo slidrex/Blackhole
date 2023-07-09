@@ -24,6 +24,7 @@ public class CreateTool : BuildingTool
             {
                 var entity = Instantiate(_editor.CurrentHolder._entity, new Vector2(Mathf.Round(mousePos.x), Mathf.Round(mousePos.y)), Quaternion.identity, _editor.Parent.transform);
                 entity.OnConstruct();
+                SoundController.Instance.PlayPlaceEntity();
                 _editor.SpaceController.UpdateLevelAllocateStatus();
             }
         }

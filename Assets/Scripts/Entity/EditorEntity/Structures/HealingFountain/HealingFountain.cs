@@ -6,6 +6,6 @@ using UnityEngine;
 public class HealingFountain : Entity
 {
 
-    public override byte SpaceRequired => 5;
+    public override byte SpaceRequired => 10;
     
 }

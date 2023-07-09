@@ -9,9 +9,9 @@ public class PlayerNavigator
 {
     public enum MoveType
     {
-        NONE,
+        CHASE,
         TARGET_AREA,
-        CHASE
+        NONE
     }
     private PlayerNavigatorModel navigatorModel;
     private Player player;
@@ -38,7 +38,7 @@ public class PlayerNavigator
     public void Update()
     {
         if (MoveState == MoveType.TARGET_AREA) PlayerCallMoveUpdate();
-        else if (MoveState == MoveType.CHASE) PlayerChaseMoveUpdate();
+        else PlayerChaseMoveUpdate();
         _playerFightController.Update();
     }
     private void OnPlayerCall(Vector2 callPosition)

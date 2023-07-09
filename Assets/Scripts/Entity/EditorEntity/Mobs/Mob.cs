@@ -27,7 +27,7 @@ public abstract class Mob : Entity, IStatProvider
         BaseColor = GetComponent<SpriteRenderer>().color;
         _animator = GetComponent<Animator>();
     }
-    public void Damage(ushort damage)
+    public virtual void Damage(ushort damage)
     {
         GameObject temp = Instantiate(bloodParticles, transform.position, Quaternion.identity);
         Destroy(temp, 1);
@@ -43,9 +43,10 @@ public abstract class Mob : Entity, IStatProvider
     {
         CurrentHealth = MaxHealth;
     }
-    private void OnDie()
+    protected virtual void OnDie()
     {
         IsDead = true;
+        SoundController.Instance.PlayMobDeath();
         Player.Instance.PlayerLevelController.AddExp(ExpPerKill);
         LevelController.Instance.InteractController.CheckSceneState();
         Destroy(gameObject);

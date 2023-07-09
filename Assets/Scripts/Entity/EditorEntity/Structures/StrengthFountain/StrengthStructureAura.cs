@@ -26,6 +26,7 @@ public class StrengthStructureAura : AreaEffectObject, IPlayerAreaTarget
             {
                 Player.Instance.DamageAmplification += damageAmplificationMultiplier;
                 StartCoroutine(UnamplifyDamage());
+                SoundController.Instance.PlayFountain();
                 return true;
             }
         }
